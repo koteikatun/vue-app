@@ -1,7 +1,11 @@
 <script setup>
-let a = 10;
+let date = "22.08.2025";
 </script>
 
-<template></template>
+<template>
+  <div>
+    {{ date }}
+  </div>
+</template>
 
 <style scoped></style>
