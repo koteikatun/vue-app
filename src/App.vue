@@ -1,10 +1,10 @@
 <script setup>
-let date = "22.08.2025";
+let currentDate = "22.08.2025";
 </script>
 
 <template>
   <div>
-    {{ date }}
+    {{ currentDate }}
   </div>
 </template>
 
