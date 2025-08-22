@@ -1,5 +1,5 @@
 <script setup>
-let currentDate = "22.08.2025";
+let currentDate = new Date().toLocaleDateString('ru-RU');
 </script>
 
 <template>
