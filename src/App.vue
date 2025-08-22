@@ -1,10 +1,10 @@
 <script setup>
-let date = "22.08.2025";
+import Button from "./components/Button.vue";
 </script>
 
 <template>
   <div>
-    {{ date }}
+    <Button />
   </div>
 </template>
 
