@@ -1,4 +1,11 @@
 :root {
+  --color-primary: #fff;
+  --color-bg-main: #008bfe;
+  --font: "Roboto", sans-serif;
+}
+
+body {
+  font-family: var(--font);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
