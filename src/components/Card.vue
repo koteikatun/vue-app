@@ -7,22 +7,23 @@ const props = defineProps({
   numberCard: {
     type: String,
   },
-  contentCardForeign: {
+  word: {
     type: String,
   },
-  contentCardTranslate: {
+  translation: {
     type: String,
   },
 });
 
+let score = ref(0);
 let isFlipped = ref(false);
-let status = ref("");
+let result = ref("");
 
 const emit = defineEmits({
   viewTranslate(payload) {
     return payload;
   },
-  setStatus(payload) {
+  setResult(payload) {
     return payload;
   },
 });
@@ -32,9 +33,12 @@ function viewTranslate() {
   emit("viewTranslate", true);
 }
 
-function changeStat(setStatus) {
-  status.value = setStatus;
-  emit("setStatus", status.value);
+function changeStat(setResult) {
+  result.value = setResult;
+  if (setResult) {
+    return score.value++;
+  }
+  emit("setResult", result.value);
 }
 </script>
 <template>
@@ -42,11 +46,12 @@ function changeStat(setStatus) {
     <div class="card-number">{{ props.numberCard }}</div>
     <div class="border-card">
       <div v-if="!isFlipped">
-        <div class="card-content">{{ props.contentCardForeign }}</div>
+        <div class="card-content">{{ props.word }}</div>
         <button class="flip-button" @click="viewTranslate">ПЕРЕВЕРНУТЬ</button>
       </div>
       <div v-else>
-        <div class="card-content">{{ props.contentCardTranslate }}</div>
+        <div></div>
+        <div class="card-content">{{ props.translation }}</div>
         <div class="icons-variable">
           <Fail class="button-result" @click="changeStat(true)" />
           <Success class="button-result" @click="changeStat(false)" />
