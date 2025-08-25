@@ -1,30 +1,58 @@
 <script setup>
+import { ref } from "vue";
+import Fail from "../icons/Fail.vue";
+import Success from "../icons/Success.vue";
+
 const props = defineProps({
   numberCard: {
     type: String,
   },
-  contentCard: {
+  contentCardForeign: {
+    type: String,
+  },
+  contentCardTranslate: {
     type: String,
   },
 });
+
+let isFlipped = ref(false);
+let status = ref("");
 
 const emit = defineEmits({
   viewTranslate(payload) {
     return payload;
   },
+  setStatus(payload) {
+    return payload;
+  },
 });
 
 function viewTranslate() {
+  isFlipped.value = true;
   emit("viewTranslate", true);
+}
+
+function changeStat(setStatus) {
+  status.value = setStatus;
+  emit("setStatus", status.value);
 }
 </script>
 <template>
   <div class="card">
     <div class="card-number">{{ props.numberCard }}</div>
     <div class="border-card">
-      <div class="card-content">{{ props.contentCard }}</div>
+      <div v-if="!isFlipped">
+        <div class="card-content">{{ props.contentCardForeign }}</div>
+        <button class="flip-button" @click="viewTranslate">ПЕРЕВЕРНУТЬ</button>
+      </div>
+      <div v-else>
+        <div class="card-content">{{ props.contentCardTranslate }}</div>
+        <div class="icons-variable">
+          <Fail class="button-result" @click="changeStat(true)" />
+          <Success class="button-result" @click="changeStat(false)" />
+        </div>
+      </div>
     </div>
-    <button class="flip-button" @click="viewTranslate()">ПЕРЕВЕРНУТЬ</button>
   </div>
 </template>
 <style scoped>
@@ -77,12 +105,29 @@ function viewTranslate() {
   background: var(--color-primary);
   position: absolute;
   bottom: 19px;
+  left: 80px;
   font-family: var(--font);
   font-weight: 700;
   font-size: 12px;
   line-height: 150%;
   letter-spacing: 0.12em;
   color: var(--color-font);
+  cursor: pointer;
+}
+
+.icons-variable {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 19px;
+  left: 80px;
+  gap: 32px;
+  background: var(--color-primary);
+  width: 97px;
+  height: 18px;
+}
+
+.button-result {
   cursor: pointer;
 }
 </style>

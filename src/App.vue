@@ -1,6 +1,13 @@
 <script setup>
 import Button from "./components/Button.vue";
+// import Card from "./components/Card.vue";
 import Headers from "./components/Headers.vue";
+
+// const data = {
+//   contentCardForeign: "Fox",
+//   contentCardTranslate: "Лиса",
+//   numberCard: "01",
+// };
 </script>
 
 <template>
@@ -9,6 +16,7 @@ import Headers from "./components/Headers.vue";
     <div class="buttons">
       <Button />
     </div>
+    <!-- <Card v-bind="data" /> -->
   </div>
 </template>
 
