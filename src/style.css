@@ -1,6 +1,9 @@
 :root {
   --color-primary: #fff;
   --color-bg-main: #008bfe;
+  --color-font: #222;
+  --color-card: #000;
+  --color-background: #f0f4f8;
   --font: "Roboto", sans-serif;
 }
 
@@ -10,4 +13,5 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: var(--color-background);
 }
