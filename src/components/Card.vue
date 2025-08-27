@@ -15,8 +15,7 @@ const props = defineProps({
   },
 });
 
-let score = ref(0);
-let isFlipped = ref(false);
+let isState = ref(false);
 let result = ref("");
 
 const emit = defineEmits({
@@ -29,15 +28,12 @@ const emit = defineEmits({
 });
 
 function viewTranslate() {
-  isFlipped.value = true;
+  isState.value = true;
   emit("viewTranslate", true);
 }
 
 function changeStat(setResult) {
   result.value = setResult;
-  if (setResult) {
-    return score.value++;
-  }
   emit("setResult", result.value);
 }
 </script>
@@ -45,7 +41,7 @@ function changeStat(setResult) {
   <div class="card">
     <div class="card-number">{{ props.numberCard }}</div>
     <div class="border-card">
-      <div v-if="!isFlipped">
+      <div v-if="!isState">
         <div class="card-content">{{ props.word }}</div>
         <button class="flip-button" @click="viewTranslate">ПЕРЕВЕРНУТЬ</button>
       </div>
