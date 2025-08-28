@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { defineProps, defineEmits } from "vue";
 import Fail from "../icons/Fail.vue";
 import Success from "../icons/Success.vue";
 
@@ -13,51 +13,53 @@ const props = defineProps({
   translation: {
     type: String,
   },
-});
-
-let isState = ref(false);
-let result = ref("");
-
-const emit = defineEmits({
-  viewTranslate(payload) {
-    return payload;
+  state: {
+    type: String,
   },
-  setResult(payload) {
-    return payload;
+  status: {
+    type: String,
   },
 });
+const emit = defineEmits(["update:status", "update:state"]);
 
-function viewTranslate() {
-  isState.value = true;
-  emit("viewTranslate", true);
+function openedCard() {
+  emit("update:state", "opened");
 }
 
-function changeStat(setResult) {
-  result.value = setResult;
-  emit("setResult", result.value);
+function successButton() {
+  emit("update:status", "success");
+}
+
+function failButton() {
+  emit("update:status", "fail");
 }
 </script>
 <template>
-  <div class="card">
+  <div class="card-container">
     <div class="card-number">{{ props.numberCard }}</div>
     <div class="border-card">
-      <div v-if="!isState">
+      <div v-if="props.state === 'closed'">
         <div class="card-content">{{ props.word }}</div>
-        <button class="flip-button" @click="viewTranslate">ПЕРЕВЕРНУТЬ</button>
+        <button class="flip-button" @click="openedCard">ПЕРЕВЕРНУТЬ</button>
       </div>
       <div v-else>
-        <div></div>
+        <div v-if="props.status === 'success'" class="icons-result">
+          <Success :width="39" :height="39" />
+        </div>
+        <div v-else-if="props.status === 'fail'" class="icons-result">
+          <Fail :width="39" :height="39" />
+        </div>
         <div class="card-content">{{ props.translation }}</div>
         <div class="icons-variable">
-          <Fail class="button-result" @click="changeStat(true)" />
-          <Success class="button-result" @click="changeStat(false)" />
+          <Fail class="button-result" @click="failButton" />
+          <Success class="button-result" @click="successButton" />
         </div>
       </div>
     </div>
   </div>
 </template>
 <style scoped>
-.card {
+.card-container {
   border-radius: 16px;
   width: 250px;
   height: 376px;
@@ -85,6 +87,14 @@ function changeStat(setResult) {
   font-weight: 400;
   color: var(--color-card);
   background: var(--color-primary);
+}
+
+.icons-result {
+  position: absolute;
+  top: 9px;
+  left: 105px;
+  width: 39px;
+  height: 39px;
 }
 
 .card-content {
