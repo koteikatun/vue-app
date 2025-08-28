@@ -1,22 +1,35 @@
 <script setup>
+import { ref } from "vue";
 import Button from "./components/Button.vue";
-// import Card from "./components/Card.vue";
+import Card from "./components/Card.vue";
 import Headers from "./components/Headers.vue";
 
-// const data = {
-//   contentCardForeign: "Fox",
-//   contentCardTranslate: "Лиса",
-//   numberCard: "01",
-// };
+const cards = ref({
+  numberCard: "01",
+  word: "Fox",
+  translation: "Лиса",
+  state: "closed",
+  status: "pending",
+});
+
+let score = ref(0);
 </script>
 
 <template>
   <div class="main">
-    <Headers />
+    <Headers :score="score" />
     <div class="buttons">
       <Button />
     </div>
-    <!-- <Card v-bind="data" /> -->
+    <Card
+      :number-card="cards.numberCard"
+      :word="cards.word"
+      :translation="cards.translation"
+      :state="cards.state"
+      :status="cards.status"
+      @update:state="cards.state = $event"
+      @update:status="cards.status = $event"
+    />
   </div>
 </template>
 
