@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import Button from "./Button.vue";
+import Input from "./Input.vue";
 import IconLocation from "../icons/IconLocation.vue";
 
 const emit = defineEmits({
@@ -9,24 +10,42 @@ const emit = defineEmits({
   },
 });
 
-let isEditted = ref(false);
+let city = ref("Moscow");
+let isEdited = ref(false);
 
 function select() {
-  isEditted.value = false;
+  isEdited.value = false;
   emit("selectCity", "London");
 }
 
 function edit() {
-  isEditted.value = true;
+  isEdited.value = true;
 }
+
 </script>
 <template>
-  <Button @click="edit()">
-    <IconLocation />
-    Изменить город
-  </Button>
-  <input />
-  <Button @click="select()"> Сохранить </Button>
+  <div class="city-select">
+    {{ city }}
+    <div v-show="isEdited" class="city-input">
+      <Input placeholder="Введите город" v-model="city" />
+      <Button @click="select()"> Сохранить </Button>
+    </div>
+    <div v-show="!isEdited">
+      <Button @click="edit()">
+        <IconLocation />
+        Изменить город
+      </Button>
+    </div>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.city-input {
+  display: flex;
+  gap: 12px;
+}
+
+.city-select {
+  width: 420px;
+}
+</style>

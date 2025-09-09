@@ -1,5 +1,6 @@
 import vue from "eslint-plugin-vue";
 import js from "@eslint/js";
+import globals from "globals";
 import prettier from "eslint-config-prettier";
 
 export default [
@@ -9,6 +10,10 @@ export default [
   {
     files: ["**/*.vue", "**/*.js"],
     languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
       ecmaVersion: "latest",
       sourceType: "module",
     },
