@@ -33,7 +33,11 @@ function viewTranslate() {
 }
 
 function changeStat(setStatus) {
-  status.value = setStatus;
+  if (setStatus) {
+    status.value = "Да";
+  } else {
+    status.value = "Нет";
+  }
   emit("setStatus", status.value);
 }
 </script>
@@ -46,10 +50,19 @@ function changeStat(setStatus) {
         <button class="flip-button" @click="viewTranslate">ПЕРЕВЕРНУТЬ</button>
       </div>
       <div v-else>
+        <div v-if="status === 'Да'" class="resultStatus">
+          <Success />
+        </div>
+        <div v-else-if="status === ''" class="resultStatus">
+          <div></div>
+        </div>
+        <div v-else class="resultStatus">
+          <Fail />
+        </div>
         <div class="card-content">{{ props.contentCardTranslate }}</div>
         <div class="icons-variable">
-          <Fail class="button-result" @click="changeStat(true)" />
-          <Success class="button-result" @click="changeStat(false)" />
+          <Fail class="button-result" @click="changeStat(false)" />
+          <Success class="button-result" @click="changeStat(true)" />
         </div>
       </div>
     </div>
@@ -129,5 +142,15 @@ function changeStat(setStatus) {
 
 .button-result {
   cursor: pointer;
+}
+
+.resultStatus {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 15px;
+  left: 109px;
+  width: 36px;
+  height: 36px;
 }
 </style>
