@@ -1,11 +1,49 @@
 <script setup>
-let date = "22.08.2025";
+import { computed, ref } from "vue";
+import CitySelect from "./components/CitySelect.vue";
+import Stat from "./components/Stat.vue";
+
+let savedCity = ref("Moscow");
+let data = ref({
+  humidity: 90,
+  rain: 0,
+  wind: 3,
+});
+
+const dataModified = computed(() => {
+  return [
+    {
+      label: "Влажность",
+      stat: data.value.humidity + "%",
+    },
+    {
+      label: "Осадки",
+      stat: data.value.rain + "%",
+    },
+    {
+      label: "Ветер",
+      stat: data.value.wind + "м/ч",
+    },
+  ];
+});
+
+function getCity(city) {
+  console.log(city);
+}
 </script>
 
 <template>
-  <div>
-    {{ date }}
-  </div>
+  <main class="main">
+    <div id="city">{{ savedCity }}</div>
+    <Stat v-for="item in dataModified" v-bind="item" :key="item.label" />
+    <CitySelect @select-city="getCity" />
+  </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+.main {
+  background: var(--color-bg-main);
+  padding: 60px 50px;
+  border-radius: 25px;
+}
+</style>
