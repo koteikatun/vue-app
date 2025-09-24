@@ -36,7 +36,7 @@ async function getCity(city) {
   const params = new URLSearchParams({
     q: city,
     lang: "ru",
-    key: "",
+    key: "7fb360b4fa464a3e873170959251709",
     days: 3,
   });
   const res = await fetch(`${API_ENDPOINT}/forecast.json?${params.toString()}`);
