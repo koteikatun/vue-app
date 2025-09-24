@@ -1,3 +1,3 @@
 ## Demo
 
-(assets/animation.gif)
+(src\assets\animation.gif)
