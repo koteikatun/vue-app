@@ -1,3 +1,3 @@
 ## Demo
 
-(src/assets/animation.gif)
+![Демонстрация работы проекта](src/assets/animation.gif)
