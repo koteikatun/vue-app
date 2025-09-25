@@ -1,5 +1,19 @@
-# Vue 3 + Vite
+# 🌤️ Weather Vue App
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Веб-приложение для просмотра погоды с красивым интерфейсом, построенное на Vue.js. Получайте актуальную информацию о погоде в любом городе мира.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## Демо
+
+![Демонстрация работы проекта](src/assets/animation.gif)
+
+## Возможности
+
+- **Поиск по городу**
+- **Прогноз на 3 дня**
+- **Детальная информация**
+
+## Технологии
+
+- **Frontend:** Vue.js 3, CSS3, HTML5
+- **API:** [WeatherAPI.com](https://www.weatherapi.com/)
+- **Инструменты:** Vue CLI, npm/yarn
