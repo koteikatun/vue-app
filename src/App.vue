@@ -7,9 +7,11 @@ import DayCard from "./components/DayCard.vue";
 
 const API_ENDPOINT = "https://api.weatherapi.com/v1";
 
+const errorMap = new Map([[1006, "Указанный город не найден"]]);
+
 let data = ref();
 let error = ref();
-const errorMap = new Map([[1006, "Указанный город не найден"]]);
+let activeIndex = ref(0);
 
 const errorDisplay = computed(() => {
   return errorMap.get(error.value?.error?.code);
@@ -36,7 +38,7 @@ async function getCity(city) {
   const params = new URLSearchParams({
     q: city,
     lang: "ru",
-    key: "",
+    key: "7fb360b4fa464a3e873170959251709",
     days: 3,
   });
   const res = await fetch(`${API_ENDPOINT}/forecast.json?${params.toString()}`);
@@ -59,11 +61,13 @@ async function getCity(city) {
       </div>
       <div class="day-card-list">
         <DayCard
-          v-for="item in data.forecast.forecastday"
+          v-for="(item, i) in data.forecast.forecastday"
           :key="item.date"
           :weather-code="item.day.condition.code"
           :temp="item.day.avgtemp_c"
           :date="new Date(item.date)"
+          :is-active="activeIndex == i"
+          @click="() => (activeIndex = i)"
         />
       </div>
     </div>
@@ -87,6 +91,7 @@ async function getCity(city) {
   gap: 80px;
   margin-bottom: 70px;
 }
+
 .stat-list {
   display: flex;
   flex-direction: column;

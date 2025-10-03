@@ -10,7 +10,7 @@ const emit = defineEmits({
   },
 });
 
-let city = ref("Moscow");
+let city = ref("Краснодар");
 let isEdited = ref(false);
 
 onMounted(() => {
