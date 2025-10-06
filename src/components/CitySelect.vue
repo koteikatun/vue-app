@@ -25,6 +25,10 @@ function select() {
 function edit() {
   isEdited.value = true;
 }
+
+const vFocus = {
+  mounted: (el) => el.focus(),
+}
 </script>
 
 <template>
@@ -32,6 +36,7 @@ function edit() {
     <div v-if="isEdited" class="city-input">
       <Input
         v-model="city"
+        v-focus
         placeholder="Введите город"
         @keyup.enter="select()"
       />
