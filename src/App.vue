@@ -1,42 +1,18 @@
 <script setup>
-import { computed, ref } from "vue";
-import CitySelect from "./components/CitySelect.vue";
-import Stat from "./components/Stat.vue";
-import Error from "./components/Error.vue";
-import DayCard from "./components/DayCard.vue";
+import { ref } from "vue";
+import PaneRight from "./components/PaneRight.vue";
 
 const API_ENDPOINT = "https://api.weatherapi.com/v1";
 
 let data = ref();
 let error = ref();
-const errorMap = new Map([[1006, "Указанный город не найден"]]);
-
-const errorDisplay = computed(() => {
-  return errorMap.get(error.value?.error?.code);
-});
-
-const dataModified = computed(() => {
-  return [
-    {
-      label: "Влажность",
-      stat: data.value.current.humidity + " %",
-    },
-    {
-      label: "Облачность",
-      stat: data.value.current.cloud + " %",
-    },
-    {
-      label: "Ветер",
-      stat: data.value.current.wind_kph + " км/ч",
-    },
-  ];
-});
+let activeIndex = ref(0);
 
 async function getCity(city) {
   const params = new URLSearchParams({
     q: city,
     lang: "ru",
-    key: "",
+    key: "7fb360b4fa464a3e873170959251709",
     days: 3,
   });
   const res = await fetch(`${API_ENDPOINT}/forecast.json?${params.toString()}`);
@@ -52,44 +28,33 @@ async function getCity(city) {
 
 <template>
   <main class="main">
-    <Error :error="errorDisplay" />
-    <div v-if="data" class="stat-data">
-      <div class="stat-list">
-        <Stat v-for="item in dataModified" v-bind="item" :key="item.label" />
-      </div>
-      <div class="day-card-list">
-        <DayCard
-          v-for="item in data.forecast.forecastday"
-          :key="item.date"
-          :weather-code="item.day.condition.code"
-          :temp="item.day.avgtemp_c"
-          :date="new Date(item.date)"
-        />
-      </div>
+    <div class="left">
     </div>
-    <CitySelect @select-city="getCity" />
+    <div class="right">
+      <PaneRight :data :error :active-index="activeIndex" @select-index="(i) => (activeIndex == i)" @select-city="getCity"/> 
+    </div>
   </main>
 </template>
 
 <style scoped>
 .main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.right {
   background: var(--color-bg-main);
   padding: 60px 50px;
-  border-radius: 25px;
+  border-radius: 0 25px 25px 0;
 }
-.day-card-list {
-  display: flex;
-  gap: 1px;
-}
-.stat-data {
-  display: flex;
-  flex-direction: column;
-  gap: 80px;
-  margin-bottom: 70px;
-}
-.stat-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+
+.left {
+  width: 500px;
+  height: 680px;
+  border-radius: 30px;
+  background-image: url('/public/bg.png');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 </style>
