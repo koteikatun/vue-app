@@ -4,6 +4,7 @@ import Stat from './Stat.vue';
 import DayCard from './DayCard.vue';
 import CitySelect from './CitySelect.vue';
 import { computed } from 'vue';
+import { errorMap } from '../constants';
 
 const { error, activeIndex, data } = defineProps({
     error: Object,
@@ -12,8 +13,6 @@ const { error, activeIndex, data } = defineProps({
 })
 
 const emit = defineEmits(['select-index', 'select-city'])
-
-const errorMap = new Map([[1006, "Указанный город не найден"]]);
 
 const errorDisplay = computed(() => {
     return errorMap.get(error?.error?.code);
@@ -51,7 +50,7 @@ v-for="(item, i) in data.forecast.forecastday" :key="item.date"
                 :is-active="activeIndex == i" @click="() => (emit('select-index', i))" />
         </div>
     </div>
-    <CitySelect @select-city="(city) => emit('select-city', city)" />
+    <CitySelect />
 </template>
 
 <style scoped>
